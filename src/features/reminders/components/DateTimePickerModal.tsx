@@ -1,7 +1,7 @@
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Modal,
   Platform,
@@ -32,14 +32,17 @@ export function DateTimePickerModal({
   const { colors, scheme } = useTheme();
   const insets = useSafeAreaInsets();
   const reducedMotion = useReducedMotion();
-  const [draft, setDraft] = useState(() => (value ? new Date(value) : new Date()));
+  const [draft, setDraft] = useState<Date>(() => (value ? new Date(value) : new Date()));
   const [stage, setStage] = useState<'date' | 'time'>('date');
+  const [prevVisible, setPrevVisible] = useState(visible);
 
-  useEffect(() => {
-    if (!visible) return;
+  if (visible && !prevVisible) {
+    setPrevVisible(true);
     setDraft(value ? new Date(value) : new Date());
     setStage('date');
-  }, [value, visible]);
+  } else if (!visible && prevVisible) {
+    setPrevVisible(false);
+  }
 
   if (!visible) return null;
 

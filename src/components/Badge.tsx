@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { radii, type, useTheme } from '@/theme';
+
 import { Icon } from './Icon';
 import type { IconName } from './iconNames';
 
-import { radii, type, useTheme } from '@/theme';
 
 export type BadgeTone = 'accent' | 'success' | 'warning' | 'danger' | 'neutral';
 

@@ -1,8 +1,9 @@
 import { Pressable, StyleSheet } from 'react-native';
 
+import { useTheme } from '@/theme';
+
 import { Icon } from './Icon';
 
-import { useTheme } from '@/theme';
 
 type CircleCheckProps = {
   checked: boolean;

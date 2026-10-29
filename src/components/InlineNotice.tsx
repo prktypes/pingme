@@ -1,9 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { radii, spacing, type, useTheme } from '@/theme';
+
 import { Icon } from './Icon';
 import type { IconName } from './iconNames';
 
-import { radii, spacing, type, useTheme } from '@/theme';
 
 export type NoticeTone = 'info' | 'success' | 'warning' | 'danger' | 'neutral';
 

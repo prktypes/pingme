@@ -1,5 +1,5 @@
-import { useFocusEffect, useRouter } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { Alert, StyleSheet, View , ScrollView } from 'react-native';
 
 import { EmptyState } from '@/components/EmptyState';

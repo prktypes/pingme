@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { radii, type, useTheme } from '@/theme';
+import { type, useTheme } from '@/theme';
 
 type SegmentOption<T extends string | number> = {
   value: T;

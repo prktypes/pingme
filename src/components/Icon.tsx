@@ -3,9 +3,10 @@ import { SymbolView, type SFSymbol } from 'expo-symbols';
 import type { ComponentProps } from 'react';
 import { Platform } from 'react-native';
 
+import { useTheme } from '@/theme';
+
 import type { IconName } from './iconNames';
 
-import { useTheme } from '@/theme';
 
 const SF_SYMBOLS: Record<IconName, SFSymbol> = {
   today: 'sun.max',

@@ -1,4 +1,11 @@
 
+import type {
+  Reminder,
+  ReminderInput,
+  ReminderTarget,
+} from '@/features/reminders/types';
+import { createId } from '@/utils/id';
+
 import { getDatabase } from './database';
 import {
   mapReminderRow,
@@ -7,12 +14,6 @@ import {
   type ReminderTargetRow,
 } from './rows';
 
-import type {
-  Reminder,
-  ReminderInput,
-  ReminderTarget,
-} from '@/features/reminders/types';
-import { createId } from '@/utils/id';
 
 export type DiscoveredTarget = {
   providerPlaceId: string;

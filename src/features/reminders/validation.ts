@@ -1,10 +1,3 @@
-import type {
-  Reminder,
-  ReminderFormValues,
-  ReminderInput,
-  RepeatRule,
-  TriggerType,
-} from './types';
 
 import {
   isPlaceCategoryId,
@@ -12,6 +5,14 @@ import {
 } from '@/places/categories';
 import { parseDate } from '@/utils/date';
 import { isCoordinates } from '@/utils/distance';
+
+import type {
+  Reminder,
+  ReminderFormValues,
+  ReminderInput,
+  RepeatRule,
+  TriggerType,
+} from './types';
 
 
 const MAX_TITLE_LENGTH = 120;

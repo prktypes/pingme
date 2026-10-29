@@ -1,6 +1,7 @@
+import { DEFAULT_RADIUS_M, type RadiusOption } from '@/constants';
+
 import { getDatabase } from './database';
 
-import { DEFAULT_RADIUS_M, type RadiusOption } from '@/constants';
 
 export const SETTING_KEYS = {
   defaultRadius: 'default_radius_m',

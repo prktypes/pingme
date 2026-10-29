@@ -1,5 +1,5 @@
 import { Stack, useNavigation, usePreventRemove, useRouter } from 'expo-router';
-import { useCallback, useEffect, useRef, useState, type ComponentRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ComponentRef } from 'react';
 import {
   Alert,
   Keyboard,
@@ -11,8 +11,6 @@ import {
   View,
 } from 'react-native';
 
-import { DateTimePickerModal } from './DateTimePickerModal';
-import { PlacePickerModal } from './PlacePickerModal';
 
 import { Button } from '@/components/Button';
 import { ChoiceSheet } from '@/components/ChoiceSheet';
@@ -51,6 +49,9 @@ import {
 } from '@/utils/date';
 import { errorMessage } from '@/utils/errors';
 
+import { DateTimePickerModal } from './DateTimePickerModal';
+import { PlacePickerModal } from './PlacePickerModal';
+
 type ReminderFormScreenProps = {
   mode: 'create' | 'edit';
   reminder?: Reminder;
@@ -85,8 +86,11 @@ export function ReminderFormScreen({ mode, reminder }: ReminderFormScreenProps) 
   const { createReminder, updateReminder } = useReminders();
   const haptic = useHaptics();
 
-  const baseValues = useRef(initialValues(defaultRadiusM, reminder));
-  const [values, setValues] = useState<ReminderFormValues>(baseValues.current);
+  const initial = useMemo(
+    () => initialValues(defaultRadiusM, reminder),
+    [defaultRadiusM, reminder],
+  );
+  const [values, setValues] = useState<ReminderFormValues>(initial);
   const [errors, setErrors] = useState<Partial<Record<ReminderField, string>>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -98,7 +102,10 @@ export function ReminderFormScreen({ mode, reminder }: ReminderFormScreenProps) 
   const [repeatSheetOpen, setRepeatSheetOpen] = useState(false);
   const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
 
-  const isDirty = JSON.stringify(values) !== JSON.stringify(baseValues.current);
+  const isDirty = useMemo(
+    () => JSON.stringify(values) !== JSON.stringify(initial),
+    [initial, values],
+  );
   const dueDate = values.dueAt ? new Date(values.dueAt) : null;
   const category = getCategory(values.category);
 

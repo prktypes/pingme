@@ -93,11 +93,13 @@ export function PlacePickerModal({
 
   useEffect(() => {
     if (!visible) return;
-    let active = true;
-
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setQuery('');
+     
     setResults(null);
+     
     setSearchError(null);
+     
     setSearchWarning(null);
 
     const next = initialPlace
@@ -106,18 +108,25 @@ export function PlacePickerModal({
           source: initialPlace.source,
         }
       : null;
+     
     setPending(next);
 
     if (next) {
       const region = regionFor(next.latitude, next.longitude);
+       
       setMapRegion(region);
     }
+  }, [visible, initialPlace]);
+
+  useEffect(() => {
+    if (!visible) return;
+    let active = true;
 
     getLocationPermissionSnapshot()
       .then((permissions) => {
         if (!active) return;
         setShowUserLocation(permissions.foreground === 'granted');
-        if (!next && permissions.foreground === 'granted') {
+        if (!initialPlace && permissions.foreground === 'granted') {
           getCurrentCoordinates().then((coordinates) => {
             if (!active || !coordinates) return;
             const region = regionFor(coordinates.latitude, coordinates.longitude);
@@ -137,15 +146,13 @@ export function PlacePickerModal({
     if (!visible) return;
     const trimmed = query.trim();
     if (trimmed.length < 2) {
-      setResults(null);
-      setSearching(false);
-      setSearchError(null);
-      setSearchWarning(null);
       return;
     }
 
     let cancelled = false;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSearching(true);
+     
     setSearchError(null);
 
     const timer = setTimeout(() => {

@@ -1,7 +1,8 @@
-import type { Reminder, ReminderTarget } from './types';
 
 import { categoryProximityLabel } from '@/places/categories';
 import { formatDueAt } from '@/utils/date';
+
+import type { Reminder, ReminderTarget } from './types';
 
 
 export function isLocationReminder(reminder: Reminder): boolean {

@@ -1,8 +1,9 @@
 import * as SQLite from 'expo-sqlite';
 
+import { DATABASE_NAME } from '@/constants';
+
 import { MIGRATIONS } from './migrations';
 
-import { DATABASE_NAME } from '@/constants';
 
 
 export type Database = SQLite.SQLiteDatabase;

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { radii, spacing, type, useTheme } from '@/theme';
+
 import { Button } from './Button';
 import { Icon } from './Icon';
 
-import { radii, spacing, type, useTheme } from '@/theme';
 
 type ErrorStateProps = {
   title?: string;

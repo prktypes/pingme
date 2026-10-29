@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { radii, spacing, type, useTheme } from '@/theme';
+
 import { Button } from './Button';
 import { Icon } from './Icon';
 import type { IconName } from './iconNames';
 
-import { radii, spacing, type, useTheme } from '@/theme';
 
 type EmptyStateProps = {
   icon: IconName;

@@ -11,7 +11,7 @@ import { HeaderAction, PageHeader } from '@/components/PageHeader';
 import { Screen } from '@/components/Screen';
 import { Section, SectionEmpty } from '@/components/Section';
 import { ReminderRow } from '@/features/reminders/components/ReminderRow';
-import { isLocationReminder, reminderSortKey } from '@/features/reminders/display';
+import { reminderSortKey } from '@/features/reminders/display';
 import { useReminders } from '@/features/reminders/RemindersProvider';
 import { useNearbyReminders } from '@/features/reminders/useNearbyReminders';
 import { useHaptics } from '@/hooks/useAccessibility';

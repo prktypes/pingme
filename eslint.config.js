@@ -11,6 +11,13 @@ module.exports = defineConfig([
       '.expo/*',
       'supabase/functions/**',
     ],
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+        },
+      },
+    },
     rules: {
       'import/namespace': 'off',
       'import/order': [
