@@ -1,16 +1,7 @@
 import * as TaskManager from 'expo-task-manager';
-import * as Location from 'expo-location';
-import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
 
+import { listReminders } from '@/db/reminderRepository';
 import { getLocationPermissionSnapshot } from '@/location/permissions';
-import { getDatabase } from '@/db/database';
-import {
-  listReminders,
-  listAllTargets,
-  claimTriggerEvent,
-  releaseTriggerEvent,
-} from '@/db/reminderRepository';
 
 // The task name must be registered with expo-task-manager before use
 // This runs in a minimal native background context
@@ -47,7 +38,7 @@ export async function registerGeofenceTask(): Promise<void> {
       // Full geofencing requires native code or EAS Build
 
       try {
-        // Get current location permission state - use the correct return type
+        // Get current location permission state
         const snapshot = await getLocationPermissionSnapshot();
         const { foreground, hasBackgroundAccess } = snapshot;
 
@@ -112,8 +103,6 @@ export async function startGeofenceMonitoring(): Promise<void> {
   // Start the task - it will run periodically but with limited geofence accuracy
   // in the development build environment
   try {
-    // Note: In expo-task-manager, startTaskAsync may have different signature
-    // depending on the version. Check the installed version.
     console.log('Geofence monitoring task registered (Expo Go limitations apply)');
   } catch (error) {
     console.error('Failed to start geofence monitoring:', error);
@@ -124,11 +113,5 @@ export async function startGeofenceMonitoring(): Promise<void> {
  * Stop the geofence monitoring task.
  */
 export function stopGeofenceMonitoring(): void {
-  try {
-    // TaskManager.stopTaskAsync may not be available in all versions
-    // safely attempt to stop
-    console.log('Geofence monitoring stop requested');
-  } catch (error) {
-    console.error('Error stopping geofence monitoring:', error);
-  }
+  console.log('Geofence monitoring stop requested');
 }
