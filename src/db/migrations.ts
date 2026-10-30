@@ -88,4 +88,13 @@ export const MIGRATIONS: Migration[] = [
       );
     `,
   },
+  {
+    version: 2,
+    name: 'phase2_geofence_columns',
+    up: `
+      ALTER TABLE reminders ADD COLUMN place_verified INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE reminders ADD COLUMN geofence_region_id TEXT;
+      ALTER TABLE reminders ADD COLUMN last_geofence_triggered_at TEXT;
+    `,
+  },
 ];
