@@ -1,29 +1,25 @@
-import { useEffect, useState } from 'react';
-import { AppState, Alert, Platform } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import { AppState, Alert, Linking } from 'react-native';
 
 import { useReminders } from '@/features/reminders/RemindersProvider';
 import { getLocationPermissionSnapshot } from '@/location/permissions';
 import { errorMessage } from '@/utils/errors';
 import { useHaptics } from '@/hooks/useAccessibility';
 
-/**
- * Hook that manages reliability features for Phase 4:
- * - Persistence testing (app restarts)
- * - Offline behavior handling
- * - Permission revocation detection
- * - Completed/completed reminder tracking
- * - Duplicate event prevention
- * - Battery-conscious background behavior
- */
+type PermissionStatus = {
+  location: 'granted' | 'denied' | 'undetermined' | 'unavailable';
+  notifications: 'granted' | 'denied' | 'undetermined' | 'unavailable';
+};
+
 export function useReliabilityFeatures() {
   const { reminders, loading, loadError, refresh } = useReminders();
   const [isOnline, setIsOnline] = useState(true);
-  const [permissionStatus, setPermissionStatus] = useState({
-    location: 'unknown',
-    notifications: 'unknown',
+  const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>({
+    location: 'undetermined',
+    notifications: 'undetermined',
   });
-  const [haptic] = useHaptics();
   const [lastAppCheck, setLastAppCheck] = useState<Date | null>(null);
+  const haptic = useHaptics();
 
   useEffect(() => {
     // Monitor app state for persistence events
@@ -38,7 +34,7 @@ export function useReliabilityFeatures() {
     const appStateListener = AppState.addEventListener('change', handleAppState);
 
     // Initial state check
-    handleAppState(AppState.currentState);
+    handleAppState(AppState.currentState as string);
 
     return () => appStateListener.remove();
   }, [refresh]);
@@ -48,12 +44,12 @@ export function useReliabilityFeatures() {
       const locationSnapshot = await getLocationPermissionSnapshot();
       setPermissionStatus({
         location: locationSnapshot.foreground,
-        notifications: 'pending', // Will be checked separately
+        notifications: 'undetermined',
       });
     } catch (error) {
       setPermissionStatus({
         location: 'denied',
-        notifications: 'error',
+        notifications: 'unavailable',
       });
     }
   }, []);
@@ -80,7 +76,7 @@ export function useReliabilityFeatures() {
         ],
       );
     }
-  });
+  }, []);
 
   const verifyNoDuplicateEvents = useCallback(async (reminderId: string) => {
     // Check trigger_history for duplicate event keys
