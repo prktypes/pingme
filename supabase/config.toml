@@ -1,0 +1,6 @@
+# Supabase Project Configuration
+project_id = "ckkseqjxyqbopauvivfi"
+
+[functions]
+# Edge Functions will be deployed to this URL prefix
+region = "us-east-1"
